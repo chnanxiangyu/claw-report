@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金融Claw用户调研报告与产品反思</title>
+<style>
+  @page { margin: 2cm 1.8cm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    color: #1a1a2e;
+    line-height: 1.75;
+    font-size: 14px;
+    background: #fff;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+
+  /* ===== Cover ===== */
+  .cover {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 3px solid #1a3a5c;
+    margin-bottom: 36px;
+  }
+  .cover-tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #8a8a9a;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .cover h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a3a5c;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .cover-sub {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 24px;
+  }
+  .cover-meta {
+    font-size: 13px;
+    color: #999;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cover-meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* ===== Section ===== */
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #1a3a5c;
+    border-left: 4px solid #c8102e;
+    padding-left: 12px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .subsection-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 24px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .sub-sub-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #34495e;
+    margin: 16px 0 8px;
+  }
+  p { margin-bottom: 10px; text-align: justify; }
+  strong { color: #1a3a5c; }
+  ul, ol { margin: 8px 0 12px 20px; }
+  li { margin-bottom: 5px; }
+
+  /* ===== Callout ===== */
+  .callout {
+    background: #f7f9fc;
+    border-left: 3px solid #1a3a5c;
+    padding: 14px 18px;
+    margin: 14px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+  }
+  .callout-red {
+    background: #fef5f5;
+    border-left: 3px solid #c8102e;
+  }
+  .callout-green {
+    background: #f0faf4;
+    border-left: 3px solid #27ae60;
+  }
+
+  /* ===== Table ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 13px;
+  }
+  th {
+    background: #1a3a5c;
+    color: #fff;
+    padding: 9px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  th:first-child { border-radius: 4px 0 0 0; }
+  th:last-child { border-radius: 0 4px 0 0; }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e8e8e8;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fafbfc; }
+  .tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .tag-p0 { background: #fce4e4; color: #c8102e; }
+  .tag-p1 { background: #fff3e0; color: #e65100; }
+  .tag-p2 { background: #e8f5e9; color: #2e7d32; }
+
+  /* ===== Stat Cards ===== */
+  .stat-row {
+    display: flex;
+    gap: 16px;
+    margin: 18px 0;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    flex: 1;
+    min-width: 140px;
+    background: #f7f9fc;
+    border-radius: 8px;
+    padding: 18px 16px;
+    text-align: center;
+    border: 1px solid #e8edf2;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1a3a5c;
+    line-height: 1.2;
+  }
+  .stat-num.red { color: #c8102e; }
+  .stat-label {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* ===== Bar Chart ===== */
+  .bar-chart { margin: 16px 0; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+  .bar-label {
+    width: 100px;
+    font-size: 12px;
+    color: #555;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 24px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 11px;
+    color: #fff;
+    font-weight: 600;
+    transition: width 0.6s ease;
+  }
+  .bar-fill.c1 { background: linear-gradient(90deg, #1a3a5c, #2c5f8a); }
+  .bar-fill.c2 { background: linear-gradient(90deg, #c8102e, #e63946); }
+  .bar-fill.c3 { background: linear-gradient(90deg, #e65100, #f57c00); }
+  .bar-fill.c4 { background: linear-gradient(90deg, #2e7d32, #43a047); }
+  .bar-fill.c5 { background: linear-gradient(90deg, #6a1b9a, #8e24aa); }
+
+  /* ===== Module Cards ===== */
+  .module-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .module-card {
+    background: #f7f9fc;
+    border-radius: 8px;
+    padding: 16px 18px;
+    border-top: 3px solid #1a3a5c;
+  }
+  .module-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a3a5c;
+    margin-bottom: 6px;
+  }
+  .module-card p {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* ===== Reflection Box ===== */
+  .reflection-box {
+    background: linear-gradient(135deg, #f7f9fc 0%, #eef2f7 100%);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin: 18px 0;
+    border: 1px solid #e0e6ed;
+  }
+  .reflection-box h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a3a5c;
+    margin-bottom: 10px;
+  }
+  .arrow-flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    background: #fff;
+    border: 1px solid #d0d8e0;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12px;
+    text-align: center;
+    flex: 1;
+    min-width: 140px;
+  }
+  .flow-step strong { display: block; color: #1a3a5c; margin-bottom: 2px; }
+  .flow-arrow {
+    color: #c8102e;
+    font-size: 20px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #e8e8e8;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  /* ===== Misc ===== */
+  .highlight { background: #fff8e1; padding: 1px 4px; border-radius: 2px; }
+  .quote {
+    border-left: 3px solid #c8102e;
+    padding-left: 14px;
+    margin: 12px 0;
+    color: #555;
+    font-style: italic;
+    font-size: 13px;
+  }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="cover-tag">RESUME PORTFOLIO · 产品调研报告</div>
+  <h1>金融Claw 用户调研报告与产品反思</h1>
+  <div class="cover-sub">第一轮用户访谈总结 · 产品迭代方向研判 · Skill生态策略修正</div>
+  <div class="cover-meta">
+    <span>项目归属：财富工具产品部</span>
+    <span>调研周期：2025.06.25 至 07.02</span>
+    <span>访谈样本：10位深度用户</span>
+  </div>
+</div>
+
+<!-- ===== 一、项目背景 ===== -->
+<div class="section">
+  <div class="section-title">一、项目背景</div>
+
+  <p><strong>金融Claw</strong>是一款 <strong>AI native 金融信息助手客户端</strong>，定位为"用AI能力帮普通用户读懂金融信息"的桌面端产品。区别于传统金融终端面向机构专业人士堆砌全量数据的产品范式，Claw试图解决的是金融信息消费链路的最后一步：<strong>理解门槛</strong>。数据获取的门槛在降低，但理解的门槛依然高高竖起。</p>
+
+  <p>我在实习期间深度参与了Claw客户端的产品迭代工作，核心职责覆盖<strong>用户调研设计与执行、产品需求梳理与优先级研判、Skill生态策略规划</strong>三个方向。本报告基于我主导的第一轮用户深度访谈（10位用户、75条问题记录），系统梳理了产品现状、用户核心诉求，并在此基础上形成了对产品方向的独立判断与反思。</p>
+
+  <div class="callout">
+    <strong>岗位关联说明：</strong>本报告所述项目处于迭代推进阶段，尚未正式落地。但完整经历了从<strong>用户洞察 → 需求结构化 → 方向判断 → 策略修正</strong>的全链路产品思考过程，这些实战经验与反思，构成了我应聘财小通产培生岗位的核心能力凭证。
+  </div>
+</div>
+
+<!-- ===== 二、产品详情 ===== -->
+<div class="section">
+  <div class="section-title">二、产品详情</div>
+
+  <div class="subsection-title">2.1 产品定位</div>
+  <p>Claw的核心理念是：<strong>金融信息从来不缺，缺的是有人帮你读懂它。</strong>产品不仅聚合行情、研报、资讯等金融数据，更依托大模型能力对信息进行加工与解读，将海量信息压缩成有信息量的判断线索，帮助用户聚焦关键变化和值得关注的方向，而非丢给用户一堆可能性。</p>
+
+  <div class="callout callout-green">
+    <strong>核心差异化：</strong>让过去只有机构才拥有的金融信息解读能力，变得更易懂、更个性化、人人可用。这不是做一个"更全的数据终端"，而是重新定义金融信息的消费方式。
+  </div>
+
+  <div class="subsection-title">2.2 目标用户</div>
+  <ul>
+    <li><strong>核心用户：</strong>有主动投资行为、但对专业金融数据解读能力不足的个人投资者</li>
+    <li><strong>延伸用户：</strong>对市场有关注意愿、希望以低门槛获取个性化金融洞察的泛理财人群</li>
+    <li><strong>用户特征：</strong>习惯使用主流C端理财平台，对AI工具有一定接受度，但金融专业素养参差</li>
+  </ul>
+
+  <div class="subsection-title">2.3 产品架构</div>
+  <p>Claw客户端以<strong>AI对话</strong>为核心交互入口，围绕对话构建了五大功能模块，形成"信息获取 → 智能解读 → 主动服务 → 跨端协同"的完整产品闭环：</p>
+
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>AI 对话</h4>
+      <p>自然语言交互的金融问答入口，支持多轮对话、上下文记忆，可调用Skill执行分析任务</p>
+    </div>
+    <div class="module-card">
+      <h4>行情看板</h4>
+      <p>实时行情展示，含基金/股票行情、板块轮动、资金流向，支持AI解读提问</p>
+    </div>
+    <div class="module-card">
+      <h4>技能广场（Skill）</h4>
+      <p>可组合的金融分析技能集合，如实时估值、大V观点追踪、盈亏预测等，用户按需选用</p>
+    </div>
+    <div class="module-card">
+      <h4>定时任务</h4>
+      <p>支持周期性/间隔性自动执行，实现"自动盯盘"，定时运行指定Skill并输出结果</p>
+    </div>
+  </div>
+  <div class="module-card" style="margin-top: 0;">
+    <h4>微信联通</h4>
+    <p>打通客户端与微信端的跨端协同链路，支持微信端发起对话、接收任务推送、上传图片等</p>
+  </div>
+
+  <div class="subsection-title">2.4 核心功能模块说明</div>
+  <p>五大功能模块的定位与能力说明如下：</p>
+
+  <div class="sub-sub-title">AI 对话：核心交互入口</div>
+  <p>自然语言金融问答入口，所有金融问答与分析任务均通过对话发起。支持多轮对话与上下文记忆，可调用Skill执行深度分析，并结合用户持仓与偏好输出个性化解读。</p>
+
+  <div class="sub-sub-title">行情看板：信息展示与AI解读</div>
+  <p>聚合基金/股票行情、板块轮动、资金流向等实时数据，支持针对行情内容直接向AI提问，兼顾"看数据"与"问解读"两种使用方式，是用户感知最直接的"看"的模块。</p>
+
+  <div class="sub-sub-title">技能广场（Skill）：可组合的分析能力</div>
+  <p>Claw区别于普通行情软件的核心差异化。每个Skill封装一个完整的金融分析能力，如实时估值、大V观点追踪、盈亏预测等，用户按需选用、按场景组合，实现"点开即用"的分析服务。</p>
+
+  <div class="sub-sub-title">定时任务：自动盯盘能力</div>
+  <p>支持周期性/间隔性任务配置，定时运行指定Skill并输出结果，让产品从"被动问答"升级为"主动服务"，承载用户"自动盯盘 + 结果推送"的核心诉求。</p>
+
+  <div class="sub-sub-title">微信联通：跨端协同</div>
+  <p>打通客户端与微信端的协同链路，支持微信端发起对话、接收任务推送、上传持仓截图等，降低用户打开客户端的门槛，构建随时可用的移动端使用场景。</p>
+</div>
+
+<!-- ===== 三、用户调研 ===== -->
+<div class="section page-break">
+  <div class="section-title">三、用户调研</div>
+
+  <div class="subsection-title">3.1 调研概况</div>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">10</div>
+      <div class="stat-label">深度访谈用户数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">75</div>
+      <div class="stat-label">问题记录总数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num red">2/10</div>
+      <div class="stat-label">愿意继续使用</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num red">2/10</div>
+      <div class="stat-label">愿意推荐他人</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3-4</div>
+      <div class="stat-label">整体满意度（满分5）</div>
+    </div>
+  </div>
+  <p><strong>调研时间：</strong>2025年6月25日至7月2日，覆盖10位用户，均为高净值投资心智用户。采用一对一深度访谈形式，围绕下载安装、AI对话、行情看板、技能广场、定时任务、微信联通六大模块展开。为保障数据安全与用户隐私，本报告全部访谈数据均已脱敏处理，不包含任何用户个人身份信息。</p>
+
+  <div class="callout">
+    <strong>关键信号：</strong>用户最满意的模块锚定在「实时估值等主推Skill」和「定时任务」。这验证了"AI加工+主动服务"是核心价值方向；但愿意继续使用和推荐的比例仅2/10，说明当前产品在核心场景闭环和基础体验上仍有明显差距。
+  </div>
+
+  <div class="subsection-title">3.2 问题分布</div>
+  <p>75条问题按类型分布如下：</p>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">基础体验</div>
+      <div class="bar-track"><div class="bar-fill c3" style="width: 40%;">30 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">功能需求</div>
+      <div class="bar-track"><div class="bar-fill c1" style="width: 37.3%;">28 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Bug修复</div>
+      <div class="bar-track"><div class="bar-fill c2" style="width: 22.7%;">17 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">待评估</div>
+      <div class="bar-track"><div class="bar-fill c5" style="width: 18.7%;">14 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">已修复</div>
+      <div class="bar-track"><div class="bar-fill c4" style="width: 2.7%;"></div></div>
+    </div>
+  </div>
+
+  <div class="subsection-title">3.3 三大核心发现</div>
+
+  <div class="sub-sub-title">发现一：持仓记忆缺失，用户反复提到"想看自己的持仓"</div>
+  <p>当前客户端没有自动导入持仓/自选数据，用户无法基于自身持仓获取个性化行情和分析。这是用户感知最强的痛点所在：没有持仓记忆，Claw的所有分析能力都停留在"通用"层面，无法产生个性化价值。</p>
+  <div class="callout">
+    <strong>迭代方向：</strong>将OCR持仓上传能力渗透到各功能场景，新用户首次对话引导上传持仓截图、微信端支持上传持仓截图、创建定时任务时推荐上传持仓并建立关联任务。目标是帮助用户快速建立持仓记忆，在各场景中持续产生个性化需求。
+  </div>
+
+  <div class="sub-sub-title">发现二：对话→定时任务→微信推送链路断裂</div>
+  <p>用户对定时任务的核心诉求是"自动盯盘 + 结果推送"，但当前链路在三个环节均存在断裂：对话中需强指令才能创建定时任务，定时任务结果无法推送到微信和对话框，用户需手动查看结果。</p>
+  <div class="callout">
+    <strong>迭代方向：</strong>打通「新建对话 → 定时任务 → 微信推送」完整闭环：对话中自然语言直接创建任务，结果自动推送至微信并生成历史对话支持追问，微信端与客户端均可查看并继续追问。这是用户感知最强的组合场景，也是Claw区别于普通行情软件的核心差异化价值。
+  </div>
+
+  <div class="sub-sub-title">发现三：客户端偏重，需轻量化</div>
+  <p>多位用户反馈安装包体积大、打开慢、运行卡顿。作为一款AI辅助工具，过重的客户端显著影响首次体验和留存。</p>
+  <div class="callout">
+    <strong>迭代方向：</strong>缩小安装包体积、Skill按需分批下载（非核心Skill不预装）、优化启动速度和运行性能。
+  </div>
+
+  <div class="subsection-title">3.4 高优需求清单（16条）</div>
+
+  <div class="sub-sub-title">微信联通（4条）</div>
+  <table>
+    <thead>
+      <tr><th style="width:50px">优先级</th><th>需求</th><th style="width:240px">价值点</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>定时任务成功/失败支持微信推送和对话框展示</td><td>核心场景闭环：定时盯盘→结果推送，用户无需打开客户端</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>定时任务成功/失败支持在对话框和历史任务中展示</td><td>无需打开任务详情即可查看，并可继续追问</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>微信端支持图片识别（持仓截图等）</td><td>打通移动端输入通道</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>微信有新对话时客户端实时提示</td><td>减少切换成本，提升联通率</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-sub-title">定时任务（5条）</div>
+  <table>
+    <thead>
+      <tr><th style="width:50px">优先级</th><th>需求</th><th style="width:240px">价值点</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>支持阈值提醒（大涨/大跌，周频）</td><td>用户自己提的最强场景，替代手动盯盘</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>自然语言直接对话创建定时任务</td><td>降低使用门槛，无需手动配参数</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>执行失败需明确展示 + 重试方案</td><td>可靠性兜底，否则推送断链</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>指令语义准确（"今日"必须返回今日数据）</td><td>基础可靠性问题</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>设置时默认勾选微信推送</td><td>和微信推送链路打通</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-sub-title">其他高价值需求（7条）</div>
+  <table>
+    <thead>
+      <tr><th style="width:50px">优先级</th><th>需求</th><th style="width:240px">价值点</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>持仓一键导入 + 识图导入</td><td>保存用户自选/持仓记忆，增强粘性</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>数据真伪验证 + 信息源可跳转</td><td>AI理财的信任基础，无信任无使用</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>点击Skill直接展示结果</td><td>降低交互成本，用户习惯"点-看"而非"点-问-等"</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>AI上下文记忆优化（问股票→加仓→给股单）</td><td>对话连贯性，当前是断点体验</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>与集团C端理财平台数据同步（持仓/自选）</td><td>降低迁移成本</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>股票行情页（K线/涨跌幅/技术面）</td><td>行情模块从"看"到"决策"的升级</td></tr>
+      <tr><td><span class="tag tag-p2">P2</span></td><td>增加24小时快讯</td><td>打开理由+1，提升DAU</td></tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">3.5 全量问题按模块分布</div>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">对话</div>
+      <div class="bar-track"><div class="bar-fill c2" style="width: 60%;">17 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">定时任务</div>
+      <div class="bar-track"><div class="bar-fill c1" style="width: 52%;">15 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">行情看板</div>
+      <div class="bar-track"><div class="bar-fill c3" style="width: 48%;">14 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">技能广场</div>
+      <div class="bar-track"><div class="bar-fill c4" style="width: 36%;">11 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">下载安装</div>
+      <div class="bar-track"><div class="bar-fill c5" style="width: 14%;">4 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">微信联通</div>
+      <div class="bar-track"><div class="bar-fill c2" style="width: 28%;">8 条</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">其他</div>
+      <div class="bar-track"><div class="bar-fill c1" style="width: 24%;">6 条</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 四、调研反思 ===== -->
+<div class="section page-break">
+  <div class="section-title">四、调研反思</div>
+
+  <p>以下反思基于第一轮访谈的真实数据与体感，结合我在Claw项目中的完整产品实践，尝试回答三个问题：<strong>产品方向对不对、Skill生态怎么建、这段经验如何连接到财小通。</strong></p>
+
+  <!-- 反思一 -->
+  <div class="subsection-title">4.1 产品方向反思：AI加工能力是壁垒，但场景闭环是前提</div>
+
+  <p>访谈数据给出了一个清晰的信号：<strong>用户最满意的模块是Skill（实时估值等主推能力），最想要的功能也围绕Skill展开</strong>（持仓导入与记忆、定时任务与微信联通、盈亏预测）。这说明Claw的差异化方向是对的，即用AI加工和解读金融信息。用户不需要又一个数据终端，他们需要的是"有人帮我读懂"。</p>
+
+  <p>但问题在于：<strong>好的能力没有嵌入到好的场景闭环中。</strong>用户买了最好的食材（Skill），却发现厨房的动线是断的（对话→定时任务→微信推送链路断裂），最终做不出一顿完整的饭。这直接反映在2/10的留存意愿上，用户认可能力，但不认可体验。</p>
+
+  <div class="reflection-box">
+    <h4>核心教训</h4>
+    <p><strong>AI产品的价值不在于"能做什么"，而在于"在什么场景下、以什么路径、自动帮用户做到什么"。</strong>Skill是能力单元，但用户购买的从来不是能力，而是场景闭环。下一阶段的迭代重心，应该是把散点能力编织成"持仓记忆 → 个性化盯盘 → 微信推送 → 追问深挖"的完整闭环，而非继续横向铺新Skill。</p>
+  </div>
+
+  <p>这一点与财小通的产品理念高度一致，"把海量信息压缩成有信息量的判断线索"，重点不是信息量本身，而是加工和解读的路径是否通畅。</p>
+
+  <!-- 反思二 -->
+  <div class="subsection-title">4.2 Skill生态策略修正：从「全面铺开」到「极客先行」</div>
+
+  <p>这是我在实习过程中最重要的一个方向性修正。</p>
+
+  <p><strong>初期的策略偏差：</strong>Claw在Skill生态建设初期，试图面向所有用户全面铺开Skill种类，什么品类都做、什么场景都覆盖，寄望于"足够全的Skill矩阵"自然吸引用户。但访谈数据打脸了这个假设：用户反馈"skill齐全但不知道怎么用""字小、同质化、分类无效、无探索欲"。全面铺开的结果是，<strong>什么都有，但什么都不精，用户什么都不想用。</strong></p>
+
+  <p><strong>修正方向：投资对的方向，极客先行。</strong>经过访谈和复盘，我判断Skill生态在初期应该走一条<strong>"极客写Skill → 渗透投资心智用户 → 真实评价与口碑传播 → 吸引普通用户"</strong>的渐进路径，而非一步到位铺向所有人：</p>
+
+  <div class="arrow-flow">
+    <div class="flow-step">
+      <strong>第一步</strong>
+      极客写Skill<br>
+      <span style="color:#888; font-size:11px;">让有技术能力+投资经验的极客用户贡献Skill，构建高质量能力池</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <strong>第二步</strong>
+      渗透投资心智用户<br>
+      <span style="color:#888; font-size:11px;">有投资心智的早期用户率先使用，产生真实使用数据和反馈</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <strong>第三步</strong>
+      口碑传播获认可<br>
+      <span style="color:#888; font-size:11px;">基于真实使用评价，极客和早期用户自发宣传，形成信任背书</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <strong>第四步</strong>
+      吸引普通用户<br>
+      <span style="color:#888; font-size:11px;">普通用户被真实口碑吸引进入，降低冷启动的教育成本</span>
+    </div>
+  </div>
+
+  <div class="callout callout-green">
+    <strong>为什么这条路径是对的：</strong>
+    <ul style="margin-top: 8px;">
+      <li><strong>信任问题先解决：</strong>金融AI最大的门槛不是功能，是信任。极客和投资心智用户具备判断Skill质量的能力，他们的真实评价本身就是信任背书。有用户提出"数据真伪验证+信息源可跳转"是AI理财的信任基础，而极客先行策略本质上就是在用<strong>真实用户的使用验证</strong>来构建这层信任。</li>
+      <li><strong>Skill质量有筛选机制：</strong>极客写Skill → 早期用户用 → 真实评价筛选 → 好Skill存活、差Skill淘汰。这比产品经理拍脑袋决定做哪些Skill更可靠，也更有生态自驱力。</li>
+      <li><strong>教育成本后置：</strong>普通用户不需要理解Skill是什么，他们只需要看到"别人用了觉得好"，然后直接用结果。这恰好对应用户反馈"习惯点-看而非点-问-等"，先让极客把"问"的能力建好，普通用户只需要"看"结果。</li>
+    </ul>
+  </div>
+
+  <p><strong>这条路径的本质，是区分"能力建设阶段"和"规模推广阶段"的用户策略。</strong>这与财小通JD中"分辨哪些是机构视角遗留的伪需求、哪些是普通用户真正的痛点"高度共鸣，极客和投资心智用户帮我们辨别了真需求，而普通用户需要的是被验证过的好结果，而非更多功能选项。</p>
+
+  <!-- 反思三 -->
+  <div class="subsection-title">4.3 Agent Harness反思：何时给结论、何时承认不确定</div>
+
+  <p>访谈中暴露的一个深层问题来自Agent的行为逻辑：用户反馈"模型思考后选择追问而非直接输出""非交易时段依旧输出当下买卖操作建议""幻觉问题（时间错误等）"。这些表面是Bug，底层是<strong>Agent harness在「给结论 vs 追问 vs 承认不确定」之间的判断逻辑</strong>尚未调优。</p>
+
+  <div class="reflection-box">
+    <h4>产品视角的思考</h4>
+    <p>金融场景对Agent的要求远高于通用场景：<strong>什么时候应该给明确结论（用户问了持仓盈亏，就该直接报数）、什么时候应该追问（用户意图模糊时）、什么时候必须承认不确定（预测类问题必须标注假设和风险）。</strong>这不是纯算法问题，而是需要产品侧定义清晰的场景规则和输出标准，什么场景下模型应该"有观点但不虚构"，什么场景下应该"给出判断线索而非确定性建议"。</p>
+    <p style="margin-top:8px;">这正是财小通JD中"和算法一起打磨大模型的加工与解读能力，什么时候给结论、什么时候承认不确定性"要解决的核心问题。我在Claw的实践中已经触碰到了这个问题，并形成了初步的产品侧思考框架。</p>
+  </div>
+
+  <!-- 反思四 -->
+  <div class="subsection-title">4.4 用户洞察方法论反思：分辨真需求与伪需求</div>
+
+  <p>75条问题中，有大量"用户说要做什么"的需求，但并非所有都值得做。通过这轮访谈，我形成了几个判断原则：</p>
+
+  <ul>
+    <li><strong>"想不起要打开"比"功能不够"更致命。</strong>2/10的留存意愿背后，核心原因不是功能缺失，而是<strong>没有打开理由</strong>。定时任务+微信推送的闭环，本质上是在制造"打开理由"，不是让用户主动来，而是让结果主动找用户。</li>
+    <li><strong>"点-看"优于"点-问-等"。</strong>用户反馈习惯直接点击看结果而非提问等待。这提示我们：AI native不等于必须"对话优先"，在行情展示等场景中，<strong>AI应该在后台加工，前端以"看"的形态交付结果</strong>，对话是深挖入口而非唯一路径。</li>
+    <li><strong>"持仓记忆"是一切个性化的前提。</strong>没有持仓数据，所有分析都是通用的。这不是一个功能需求，而是<strong>产品的基础设施</strong>，它应该渗透到每个模块，而非做成一个独立入口。</li>
+  </ul>
+
+  <p>这些判断与财小通"从用户根本需求出发，定义并迭代核心金融场景的产品能力"的岗位要求直接对应，不是用户要什么就做什么，而是<strong>从根本需求出发翻译成产品方案</strong>。</p>
+
+  <!-- 与岗位的连接 -->
+  <div class="subsection-title">4.5 与财小通岗位的连接：为什么是我的实战经验足以胜任</div>
+
+  <div class="reflection-box">
+    <p>Claw项目虽然尚未正式落地，但我完整经历了从<strong>用户洞察 → 需求结构化 → 方向判断 → 策略修正</strong>的产品全链路思考。这段经历与财小通产培生岗位的核心要求高度匹配：</p>
+
+    <table style="margin-top: 14px;">
+      <thead>
+        <tr><th style="width:35%">财小通岗位要求</th><th>我的实战对应</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>从用户根本需求出发定义产品能力</strong></td>
+          <td>通过10位用户深度访谈，从75条问题中提炼出3大核心方向（持仓记忆、场景闭环、轻量化），并梳理出16条高优需求</td>
+        </tr>
+        <tr>
+          <td><strong>端到端参与 model eval → agent harness → C端体验</strong></td>
+          <td>从Agent行为逻辑（何时给结论/追问/承认不确定）到Skill生态策略（极客先行路径）到C端交互优化（点-看 vs 点-问-等），全链路均有实践和独立判断</td>
+        </tr>
+        <tr>
+          <td><strong>识别旧金融产品没能解决的加工/解读缺口</strong></td>
+          <td>Claw的差异化定位与财小通一致，不是做更全的数据终端，而是拆掉"理解门槛"。我在实践中验证了"AI加工能力是壁垒，但场景闭环是前提"</td>
+        </tr>
+        <tr>
+          <td><strong>和算法一起打磨大模型在金融信息加工上的表现</strong></td>
+          <td>已形成产品侧的Agent行为规则框架：什么场景给结论、什么场景追问、什么场景必须标注不确定性</td>
+        </tr>
+        <tr>
+          <td><strong>在没有现成范式的地方自己趟出方向</strong></td>
+          <td>Skill生态策略从"全面铺开"到"极客先行"的修正，正是在没有现成答案的情况下，基于用户数据和产品判断独立做出的方向性决策</td>
+        </tr>
+        <tr>
+          <td><strong>懂点金融/证券投资，有金融数据/AI产品实习经历</strong></td>
+          <td>在金融科技公司财富工具部实习，深度参与金融AI产品Claw的调研、需求、策略全链路，具备金融场景+AI产品的双重实战经验</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-red">
+    <strong>我的核心认知：</strong>下一代金融产品不是"更全的数据终端"，而是"更懂你的信息解读者"。这个判断不是来自理论推演，而是来自10位真实用户、75条问题、2/10留存数据给我的一记记实锤。财小通要做的正是这件事，而我已经在类似的产品上踩过坑、调过方向、形成过判断。项目未落地是遗憾，但<strong>实战中获得的认知迭代速度，本身就是竞争力</strong>。
+  </div>
+</div>
+
+<div class="footer">
+  本报告基于金融Claw第一轮用户访谈数据整理 · 作为财小通产培生岗位应聘附属材料
+</div>
+
+</body>
+</html>
